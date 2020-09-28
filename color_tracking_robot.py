@@ -4,33 +4,44 @@ import numpy as np
 import RPi.GPIO as GPIO
 from time import sleep
 GPIO.setmode(GPIO.BCM)
-FL_pin = 26
+
+    #----------------moter_assign---------------#
+    #
+    #    FL_moter  / / ｜-----｜ / /  FR_moter
+    #                  ｜     ｜
+    #                  ｜     ｜
+    #    BL_moter  / / ｜-----｜ / /  BR_moter
+    #
+    #-------------------------------------------#
+
+FL_pwm_pin = 26
 FL_dir1 = 19
 
-FR_pin = 13
+FR_pwm_pin = 13
 FR_dir1 = 6
 
-BL_pin = 21
+BL_pwm_pin = 21
 BL_dir1 = 20
 
-BR_pin = 16
+BR_pwm_pin = 16
 BR_dir1 = 12
 
-GPIO.setup(FL_pin,GPIO.OUT)
+GPIO.setup(FL_pwm_pin,GPIO.OUT)
 GPIO.setup(FL_dir1,GPIO.OUT)
-GPIO.setup(FR_pin,GPIO.OUT)
+
+GPIO.setup(FR_pwm_pin,GPIO.OUT)
 GPIO.setup(FR_dir1,GPIO.OUT)
 
-GPIO.setup(BL_pin,GPIO.OUT)
+GPIO.setup(BL_pwm_pin,GPIO.OUT)
 GPIO.setup(BL_dir1,GPIO.OUT)
 
-GPIO.setup(BR_pin,GPIO.OUT)
+GPIO.setup(BR_pwm_pin,GPIO.OUT)
 GPIO.setup(BR_dir1,GPIO.OUT)
 
-pwmFL = GPIO.PWM(FL_pin,200)
-pwmFR = GPIO.PWM(FR_pin,200)
-pwmBL = GPIO.PWM(BL_pin,200)
-pwmBR = GPIO.PWM(BR_pin,200)
+pwmFL = GPIO.PWM(FL_pwm_pin,200)
+pwmFR = GPIO.PWM(FR_pwm_pin,200)
+pwmBL = GPIO.PWM(BL_pwm_pin,200)
+pwmBR = GPIO.PWM(BR_pwm_pin,200)
 
 #moter drive dir (forward)
 
