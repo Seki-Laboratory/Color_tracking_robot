@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import cv2
 import numpy as np
-import moter
+import RPi.GPIO as GPIO 
+from moter import moter
 
 
 def red_detect(img):
@@ -75,29 +76,30 @@ def main():
         x = center_x - w/2
         if x > 100:
             #moter_turn_left
-                moter.moter(15,-15,15,-15)
+                moter(15,-15,15,-15)
         elif x < -100:
             #moter_turn_Right
-                moter.moter(-15,15,-15,15)
+                moter(-15,15,-15,15)
         elif area < 50000: 
             #moter_straight
-                moter.moter(15,15,15,15)
+                moter(15,15,15,15)
         else:
             #moter_stop
-                moter.moter(0,0,0,0)         
+                moter(0,0,0,0)         
 
         # 結果表示
         cv2.imshow("Frame", frame)
-        print(x)
-        #cv2.imshow("Mask", mask)
+        cv2.imshow("Mask", mask)
 
         # qキーが押されたら途中終了
         if cv2.waitKey(25) & 0xFF == ord('q'):
-            break
 
+            break
+        
+    GPIO.cleanup()
     cap.release()
     cv2.destroyAllWindows()
-    GPIO.cleanup()
+
 
 if __name__ == '__main__':
     main() 
