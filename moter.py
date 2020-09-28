@@ -6,6 +6,7 @@ GPIO.setmode(GPIO.BCM)
     #
     #    FL_moter  / / ｜-----｜ / /  FR_moter
     #                  ｜     ｜
+    #                    robot
     #                  ｜     ｜
     #    BL_moter  / / ｜-----｜ / /  BR_moter
     #
