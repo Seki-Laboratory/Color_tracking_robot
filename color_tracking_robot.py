@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 import cv2
 import numpy as np
-import RPi.GPIO as GPIO 
-from moter import moter
-
+import moter
 
 def red_detect(img):
     # HSV色空間に変換
@@ -76,16 +74,16 @@ def main():
         x = center_x - w/2
         if x > 100:
             #moter_turn_left
-                moter(15,-15,15,-15)
+                moter.moter(15,-15,15,-15)
         elif x < -100:
             #moter_turn_Right
-                moter(-15,15,-15,15)
+                moter.moter(-15,15,-15,15)
         elif area < 50000: 
             #moter_straight
-                moter(15,15,15,15)
+                moter.moter(15,15,15,15)
         else:
             #moter_stop
-                moter(0,0,0,0)         
+                moter.moter(0,0,0,0)         
 
         # 結果表示
         cv2.imshow("Frame", frame)
@@ -96,7 +94,7 @@ def main():
 
             break
         
-    GPIO.cleanup()
+    moter.cleanup()
     cap.release()
     cv2.destroyAllWindows()
 

@@ -64,3 +64,9 @@ def moter(FLspeed,FRspeed,BLspeed,BRspeed):
     pwmFR.start(abs(FLspeed))  
     pwmBR.start(abs(FLspeed))
 
+def cleanup():
+    GPIO.cleanup()
+    pwmFL.start(0)  
+    pwmBL.start(0)
+    pwmFR.start(0)  
+    pwmBR.start(0)
