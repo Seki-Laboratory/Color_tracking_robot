@@ -8,13 +8,13 @@ def red_detect(img):
 
     # 赤色のHSVの値域1
 
-    hsv_min = np.array([0,230,0])
+    hsv_min = np.array([0,230,80])
     hsv_max = np.array([30,255,255])
 
     mask1 = cv2.inRange(hsv, hsv_min, hsv_max)
 
     # 赤色のHSVの値域2
-    hsv_min = np.array([150,230,0])
+    hsv_min = np.array([150,230,80])
     hsv_max = np.array([179,255,255])
     mask2 = cv2.inRange(hsv, hsv_min, hsv_max)
     
@@ -51,7 +51,7 @@ def blue_detect(img):
 
     # 赤色のHSVの値域1
 
-    hsv_min = np.array([90,127,0])
+    hsv_min = np.array([90,127,80])
     hsv_max = np.array([150,255,255])
 
     mask1 = cv2.inRange(hsv, hsv_min, hsv_max)
@@ -104,14 +104,20 @@ def main():
         center_y = int(target["center"][1])
         centerb_x = int(targetb["center"][0])
         centerb_y = int(targetb["center"][1])       
-        area = int(target["area"])
+        area_red = int(target["area"])
+        area_blue = int(targetb["area"])
 
         # フレームに面積最大ブロブの中心周囲を円で描く
-        cv2.circle(frame, (center_x, center_y), 30, (0, 0, 255),
-                   thickness=3, lineType=cv2.LINE_AA)
+        if area_red > 1000 :
+                
+            cv2.circle(frame, (center_x, center_y), 30, (0, 0, 255),
+                    thickness=3, lineType=cv2.LINE_AA)
+        if area_blue > 1000 :
+            cv2.circle(frame, (centerb_x, centerb_y), 30, (255, 0, 0),
+                    thickness=3, lineType=cv2.LINE_AA)
 
-        cv2.circle(frame, (centerb_x, centerb_y), 30, (255, 0, 0),
-                   thickness=3, lineType=cv2.LINE_AA)
+        print(area_red) 
+
 
         w = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         x = center_x - w/2
