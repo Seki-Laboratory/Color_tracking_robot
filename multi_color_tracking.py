@@ -116,7 +116,7 @@ def main():
             cv2.circle(frame, (centerb_x, centerb_y), 30, (255, 0, 0),
                     thickness=3, lineType=cv2.LINE_AA)
 
-        print(area_red) 
+        #print(area_red) 
 
 
         w = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
