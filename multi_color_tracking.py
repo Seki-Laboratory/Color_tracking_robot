@@ -63,7 +63,7 @@ def analysis_blob_blue(binary_img):
     label = cv2.connectedComponentsWithStats(binary_img)
 
     # ブロブ情報を項目別に抽出
-    n = label[0] - 1
+    #n = label[0] - 1
     data = np.delete(label[2], 0, 0)
     center = np.delete(label[3], 0, 0)
 
@@ -88,7 +88,7 @@ def main():
 
     # カメラのキャプチャ
     cap = cv2.VideoCapture(0)
-    
+  
     while(cap.isOpened()):
         # フレームを取得
         ret, frame = cap.read()
@@ -116,7 +116,7 @@ def main():
             cv2.circle(frame, (centerb_x, centerb_y), 30, (255, 0, 0),
                     thickness=3, lineType=cv2.LINE_AA)
 
-        print(area_red) 
+        #print(area_red) 
 
 
         w = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
@@ -126,8 +126,8 @@ def main():
 
         # 結果表示
         cv2.imshow("Frame", frame)
-        cv2.imshow("Mask_red", mask)
-        cv2.imshow("Mask_blue", maskb)
+        #cv2.imshow("Mask_red", mask)
+        #cv2.imshow("Mask_blue", maskb)
 
         # qキーが押されたら途中終了
         if cv2.waitKey(25) & 0xFF == ord('q'):
