@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from functools import update_wrapper
 import cv2
 import numpy as np
 
@@ -8,13 +9,13 @@ def red_detect(img):
 
     # 赤色のHSVの値域1
 
-    hsv_min = np.array([0,127,0])
+    hsv_min = np.array([0,180,30])
     hsv_max = np.array([30,255,255])
 
     mask1 = cv2.inRange(hsv, hsv_min, hsv_max)
 
     # 赤色のHSVの値域2
-    hsv_min = np.array([150,127,0])
+    hsv_min = np.array([150,180,30])
     hsv_max = np.array([179,255,255])
     mask2 = cv2.inRange(hsv, hsv_min, hsv_max)
 
@@ -78,8 +79,15 @@ def main():
             # # # フレームに面積最大ブロブの中心周囲を円で描く
             cv2.circle(frame, (center_x, center_y), 30, (0, 200, 0),
                     thickness=3, lineType=cv2.LINE_AA)
-            w = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
-            x = center_x - w/2
+           # w = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
+            #x = center_x - w/2
+            
+            # # # 四角で囲む
+            upx = int(target["upper_left"][0])
+            upy = int(target["upper_left"][1])
+            w = int(target["width"])
+            h = int(target["height"])
+            cv2.rectangle(frame, (upx, upy), (upx+w, upy+h), (0, 0, 255))
 
        
 
