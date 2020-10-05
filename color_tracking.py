@@ -17,8 +17,10 @@ def red_detect(img):
     hsv_min = np.array([150,127,0])
     hsv_max = np.array([179,255,255])
     mask2 = cv2.inRange(hsv, hsv_min, hsv_max)
-    
-    return mask1 + mask2
+
+    maska = mask1 + mask2
+
+    return maska
 
 # ブロブ解析
 def analysis_blob(binary_img):
@@ -27,23 +29,30 @@ def analysis_blob(binary_img):
 
     # ブロブ情報を項目別に抽出
     n = label[0] - 1
-    data = np.delete(label[2], 0, 0)
-    center = np.delete(label[3], 0, 0)
-
-    # ブロブ面積最大のインデックス
-    max_index = np.argmax(data[:, 4])
-
-    # 面積最大ブロブの情報格納用
-    maxblob = {}
-
-    # 面積最大ブロブの各種情報を取得
-    maxblob["upper_left"] = (data[:, 0][max_index], data[:, 1][max_index]) # 左上座標
-    maxblob["width"] = data[:, 2][max_index]  # 幅
-    maxblob["height"] = data[:, 3][max_index]  # 高さ
-    maxblob["area"] = data[:, 4][max_index]   # 面積
-    maxblob["center"] = center[max_index]  # 中心座標
+    if n >= 1:
+        #print(n)
+        data = np.delete(label[2], 0, 0)
+        center = np.delete(label[3], 0, 0)
     
-    return maxblob
+
+        # ブロブ面積最大のインデックス
+
+        max_index = np.argmax(data[:, 4])
+
+        # 面積最大ブロブの情報格納用
+        maxblob = {}
+
+        # 面積最大ブロブの各種情報を取得
+        maxblob["upper_left"] = (data[:, 0][max_index], data[:, 1][max_index]) # 左上座標
+        maxblob["width"] = data[:, 2][max_index]  # 幅
+        maxblob["height"] = data[:, 3][max_index]  # 高さ
+        maxblob["area"] = data[:, 4][max_index]   # 面積
+        maxblob["center"] = center[max_index]  # 中心座標
+    
+        return maxblob
+    else:    
+        return 0
+
 
 def main():
     #videofile_path = "C:/github/sample/python/opencv/video/color_tracking/red_pendulum.mp4"
@@ -57,20 +66,20 @@ def main():
 
         # 赤色検出
         mask = red_detect(frame)
-
-        # マスク画像をブロブ解析（面積最大のブロブ情報を取得）
         target = analysis_blob(mask)
-        
-        # 面積最大ブロブの中心座標を取得
-        center_x = int(target["center"][0])
-        center_y = int(target["center"][1])       
-        area = int(target["area"])
 
-        # フレームに面積最大ブロブの中心周囲を円で描く
-        cv2.circle(frame, (center_x, center_y), 30, (0, 200, 0),
-                   thickness=3, lineType=cv2.LINE_AA)
-        w = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
-        x = center_x - w/2
+ 
+        if target != 0 :
+            # # # 面積最大ブロブの中心座標を取得
+            center_x = int(target["center"][0])
+            center_y = int(target["center"][1])       
+            area = int(target["area"])
+
+            # # # フレームに面積最大ブロブの中心周囲を円で描く
+            cv2.circle(frame, (center_x, center_y), 30, (0, 200, 0),
+                    thickness=3, lineType=cv2.LINE_AA)
+            w = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
+            x = center_x - w/2
 
        
 
@@ -78,6 +87,7 @@ def main():
         cv2.imshow("Frame", frame)
         cv2.imshow("Mask", mask)
 
+        
         # qキーが押されたら途中終了
         if cv2.waitKey(25) & 0xFF == ord('q'):
 
