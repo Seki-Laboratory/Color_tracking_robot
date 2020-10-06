@@ -30,7 +30,7 @@ def analysis_blob(binary_img):
 
     # ブロブ情報を項目別に抽出
     n = label[0] - 1
-    if n >= 1:
+    if n != 0:
         #print(n)
         data = np.delete(label[2], 0, 0)
         center = np.delete(label[3], 0, 0)
