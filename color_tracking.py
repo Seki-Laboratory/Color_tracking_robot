@@ -1,3 +1,5 @@
+#color_tracking test source for windows & raspberrypi 2020/10/10 
+
 # -*- coding: utf-8 -*-
 #from functools import update_wrapper
 import cv2
@@ -56,12 +58,11 @@ def analysis_blob(binary_img):
 
 
 def main():
-    #videofile_path = "C:/github/sample/python/opencv/video/color_tracking/red_pendulum.mp4"
-
     # カメラのキャプチャ
-    cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+    #windowsの場合はcv2．CAP_DSHOWを第2引数にいれる  
+    cap = cv2.VideoCapture(0, cv2.CAP_DSHOW) 
+    #cap = cv2.VideoCapture(0) 
 
-    
     while(cap.isOpened()):
         # フレームを取得
         ret, frame = cap.read()
