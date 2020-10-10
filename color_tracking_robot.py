@@ -2,7 +2,7 @@
 import cv2
 import numpy as np
 import moter
-
+# 二値化
 def red_detect(img):
     # HSV色空間に変換
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)

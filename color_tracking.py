@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from functools import update_wrapper
+#from functools import update_wrapper
 import cv2
 import numpy as np
 
@@ -59,7 +59,8 @@ def main():
     #videofile_path = "C:/github/sample/python/opencv/video/color_tracking/red_pendulum.mp4"
 
     # カメラのキャプチャ
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+
     
     while(cap.isOpened()):
         # フレームを取得
@@ -101,9 +102,9 @@ def main():
 
             break
         
-
     cap.release()
     cv2.destroyAllWindows()
+
 
 
 if __name__ == '__main__':
