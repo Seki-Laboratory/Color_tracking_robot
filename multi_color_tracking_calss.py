@@ -16,20 +16,50 @@ class color:
         # 赤色のHSVの値域1
         mask = cv2.inRange(hsv, self.hsv_min, self.hsv_max)
         return mask
-    
+
+    def analysis_blob(self,b):
+        # 2値画像のラベリング処理
+        label = cv2.connectedComponentsWithStats(b)
+
+        # ブロブ情報を項目別に抽出
+        #n = label[0] - 1
+        data = np.delete(label[2], 0, 0)
+        center = np.delete(label[3], 0, 0)
+
+        # ブロブ面積最大のインデックス
+        max_index = np.argmax(data[:, 4])
+
+        # 面積最大ブロブの情報格納用
+        maxblob = {}
+
+        # 面積最大ブロブの各種情報を取得
+        maxblob["upper_left"] = (data[:, 0][max_index], data[:, 1][max_index]) # 左上座標
+        maxblob["width"] = data[:, 2][max_index]  # 幅
+        maxblob["height"] = data[:, 3][max_index]  # 高さ
+        maxblob["area"] = data[:, 4][max_index]   # 面積
+        maxblob["center"] = center[max_index]  # 中心座標
+        
+        return maxblob    
 
     
     
 def main():
     print("main")
     cap = cv2.VideoCapture(0,cv2.CAP_DSHOW)
+    #インスタンス生成
     blue = color(90,127,80,150,255,255)
     
-
     while(cap.isOpened()):
         ret,frame = cap.read()
-        result = blue.color_detect(frame)
-        cv2.imshow('hsv_mask_blue',result)
+        mask = blue.color_detect(frame)
+        target_blue = blue.analysis_blob(mask)
+
+        center_blue_y = int(target_blue["center"][1])  
+        center_blue_x = int(target_blue["center"][0])
+
+        cv2.circle(frame, (center_blue_x, center_blue_y), 30, (255, 0, 0),
+        thickness=3, lineType=cv2.LINE_AA)
+        cv2.imshow('hsv_mask_blue',frame)
 
 
 
