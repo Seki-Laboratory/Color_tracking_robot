@@ -20,8 +20,8 @@ def main():
         key = cv2.waitKey(1)&0xff
         if key == ord('q'):
             break
-
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
     main()
+

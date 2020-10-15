@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import cv2
 import numpy as np
-import moter
+from module import moter
 # 二値化
 def red_detect(img):
     # HSV色空間に変換
