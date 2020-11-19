@@ -51,7 +51,11 @@ def check_camera_connection():
         # 結果表示
         cv2.imshow("Frame",img)
  
-
+        # qキーが押されたら途中終了
+        if cv2.waitKey(25) & 0xFF == ord('c'):
+            cv2.imwrite('messigray.png',img)
+            pass
+        
         
         # qキーが押されたら途中終了
         if cv2.waitKey(25) & 0xFF == ord('q'):
