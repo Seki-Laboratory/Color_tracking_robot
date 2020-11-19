@@ -12,10 +12,12 @@ def check_camera_connection():
 
     print('[', datetime.datetime.now(), ']', 'searching any camera...')
     true_camera_is = []  # 空の配列を用意
-
+    
+    # ノートPC標準搭載カメラを有効にしているとUSBカメラが一台しか認識しないお
     # カメラ番号を0～9まで変えて、COM_PORTに認識されているカメラを探す
     for camera_number in range(0, 4):
         cap = cv2.VideoCapture(camera_number,cv2.CAP_DSHOW)
+
         ret, frame = cap.read()
 
         if ret is True:
@@ -37,6 +39,7 @@ def check_camera_connection():
         cams.append(cam) 
         print("CAM_DeviceID===>"+str(cam))
 
+
     while True:
         frames = []
 
@@ -50,17 +53,16 @@ def check_camera_connection():
         #img = cv2.hconcat(frames)
         # 結果表示
         cv2.imshow("Frame",img)
- 
-        # qキーが押されたら途中終了
-        if cv2.waitKey(25) & 0xFF == ord('c'):
-            cv2.imwrite('messigray.png',img)
-            pass
-        
-        
-        # qキーが押されたら途中終了
-        if cv2.waitKey(25) & 0xFF == ord('q'):
-
+         
+        # qキー入力処理
+        key = cv2.waitKey(25) & 0xFF
+        if key == ord('q'): 
             break
+        elif key == ord('s'):
+            now = datetime.datetime.now()
+            nowtime = '{0:%m%d%H%M%S}'.format(now)
+            cv2.imwrite(nowtime+'.jpg',img)
+
 
     for cam in cams:       
       cam.release()
