@@ -3,37 +3,24 @@ import cv2
 import numpy as np
 
 def main():
-    cap = cv2.VideoCapture(0)
+    cam1 = cv2.VideoCapture(0)
+    cam2 = cv2.VideoCapture(1)
+    #cam3 = cv2.VideoCapture(2)
+    #cam4 = cv2.VideoCapture(3)
     
-    while(cap.isOpened()):
+    while True:
         # フレームを取得
-        ret, frame = cap.read()
+        ret, frame = cam1.read()
+        ret, frame1 = cam2.read()
+        # ret, frame2 = cam3.read()
+        # ret, frame3 = cam4.read()
 
-        # グレースケール変換
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-        # 2値化
-        gray = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
-
-        # ラベリング処理
-        label = cv2.connectedComponentsWithStats(gray)
-
-        # ブロブ情報を項目別に抽出
-        n = label[0] - 1
-        data = np.delete(label[2], 0, 0)
-        center = np.delete(label[3], 0, 0)
-
-        # ラベルの個数nだけ色を用意
-        print("ブロブの個数:", n)
-        print("各ブロブの外接矩形の左上x座標", data[:,0])
-        print("各ブロブの外接矩形の左上y座標", data[:,1])
-        print("各ブロブの外接矩形の幅", data[:,2])
-        print("各ブロブの外接矩形の高さ", data[:,3])
-        print("各ブロブの面積", data[:,4])
-        print("各ブロブの中心座標:\n",center)
             # 結果表示
         cv2.imshow("Frame", frame)
-        cv2.imshow("Mask", gray)
+        cv2.imshow("Frame1", frame1)
+        # cv2.imshow("Frame2", frame2)
+        # cv2.imshow("Frame3", frame3)
+
 
         
         # qキーが押されたら途中終了
@@ -42,7 +29,10 @@ def main():
             break
         
 
-    cap.release()
+    cam1.release()
+    cam2.release()
+    # cam3.release()
+    # cam4.release()
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
