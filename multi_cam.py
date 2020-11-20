@@ -61,7 +61,7 @@ def check_camera_connection():
         elif key == ord('s'):
             now = datetime.datetime.now()
             nowtime = '{0:%m%d%H%M%S}'.format(now)
-            cv2.imwrite(nowtime+'.jpg',img)
+            cv2.imwrite('save/'+nowtime+'.jpg',img)
 
 
     for cam in cams:       
