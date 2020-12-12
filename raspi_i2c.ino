@@ -1,4 +1,5 @@
 #include <Wire.h>
+#include <Esplora.h>
 
 int SLAVE_ADDRESS = 0x04;   //I2Cのアドレス『0x04』
 

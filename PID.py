@@ -4,15 +4,15 @@ from numpy.random import *
 
 M = 0.00 
 M1 =  0.00 
-goal = 10.00  
+goal = 100.00  
 e = 0.00 
 e1 = 0.00 
 e2 = 0.00 
 Kp = 0.8
-Ki = 0.1
-Kd = 0
+Ki = 15
 
-t = 100
+
+t = 1000
 
 x_list = []
 y_list = []
@@ -26,7 +26,7 @@ for i in range(1,t):
         e1 = e
         e = goal - y_list[i-1] #偏差（e） = 目的値（goal） - 前回の操作量
 
-        M = M1 + Kp * (e-e1) + Ki * e + Kd * ((e-e1) - (e1-e2))
+        M = M1 + Kp * (e-e1) + Ki * e 
 
         x_list.append(i)
         y_list.append(M)

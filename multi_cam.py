@@ -16,7 +16,7 @@ def check_camera_connection():
     # ノートPC標準搭載カメラを有効にしているとUSBカメラが一台しか認識しないお
     # カメラ番号を0～9まで変えて、COM_PORTに認識されているカメラを探す
     for camera_number in range(0, 4):
-        cap = cv2.VideoCapture(camera_number,cv2.CAP_DSHOW)
+        cap = cv2.VideoCapture(camera_number)
 
         ret, frame = cap.read()
 
@@ -35,7 +35,7 @@ def check_camera_connection():
     cams = []
 
     for i in true_camera_is:
-        cam = cv2.VideoCapture(i, cv2.CAP_DSHOW)
+        cam = cv2.VideoCapture(i)
         cams.append(cam) 
         print("CAM_DeviceID===>"+str(cam))
 
